@@ -30,7 +30,7 @@ export function CreateTableModal({ isOpen, onClose }: CreateTableModalProps) {
           color: 'var(--text-primary)',
           textAlign: 'center'
         }}>
-          Yeni Masa Oluştur
+          Create New Table
         </h2>
 
         <div style={{ marginBottom: '2rem' }}>
@@ -44,7 +44,7 @@ export function CreateTableModal({ isOpen, onClose }: CreateTableModalProps) {
               letterSpacing: '0.05em',
             }}
           >
-            Masa Kapasitesi
+            Table Capacity
           </label>
           <div className="capacity-grid">
             {CAPACITY_OPTIONS.map((capacity) => (
@@ -91,7 +91,7 @@ export function CreateTableModal({ isOpen, onClose }: CreateTableModalProps) {
               padding: '0.8rem 2rem',
             }}
           >
-            İptal
+            Cancel
           </button>
           <button
             className="primary"
@@ -101,7 +101,7 @@ export function CreateTableModal({ isOpen, onClose }: CreateTableModalProps) {
               minWidth: '120px',
             }}
           >
-            Oluştur
+            Create
           </button>
         </div>
       </div>

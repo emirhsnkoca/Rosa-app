@@ -21,7 +21,7 @@ function AppContent() {
           className="secondary new-table-btn"
           onClick={() => setIsCreateModalOpen(true)}
         >
-          <span style={{ fontSize: '1.2rem' }}>+</span> Yeni Masa
+          <span style={{ fontSize: '1.2rem' }}>+</span> New Table
         </button>
       </header>
 

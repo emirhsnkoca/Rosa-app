@@ -19,7 +19,7 @@ const generateMockUser = (): User => {
   const randomId = Math.random().toString(36).substring(2, 9);
   return {
     address: `user_${randomId}`,
-    name: `Kullanıcı_${randomId}`,
+    name: `User_${randomId}`,
   };
 };
 
@@ -94,13 +94,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (table.id === tableId) {
           // Masa dolu mu kontrol et
           if (table.participants.length >= table.capacity) {
-            alert('Bu masa dolu!');
+            alert('This table is full!');
             return table;
           }
 
           // Masa tamamlanmış mı kontrol et
           if (table.status === 'completed') {
-            alert('Bu masa tamamlanmış!');
+            alert('This table is already completed!');
             return table;
           }
 

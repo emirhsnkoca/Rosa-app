@@ -16,9 +16,9 @@ export function TableList() {
           gap: '1rem'
         }}
       >
-        <h2 style={{ margin: 0, color: 'var(--text-primary)' }}>Açık Masalar</h2>
+        <h2 style={{ margin: 0, color: 'var(--text-primary)' }}>Active Tables</h2>
         <span style={{ color: 'var(--text-secondary)' }}>
-          {state.tables.length} masa mevcut
+          {state.tables.length} tables available
         </span>
       </div>
 
@@ -30,7 +30,7 @@ export function TableList() {
 
       {state.tables.length === 0 && (
         <div className="empty-state">
-          Henüz açık masa yok. İlk masayı oluşturun!
+          No active tables yet. Create the first one!
         </div>
       )}
     </div>

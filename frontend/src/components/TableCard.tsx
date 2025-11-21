@@ -12,12 +12,12 @@ export function TableCard({ table }: TableCardProps) {
 
   const getStatusText = () => {
     if (table.status === 'completed' && table.winner) {
-      return 'Tamamlandı';
+      return 'Completed';
     }
     if (table.status === 'full') {
-      return 'Çekiliş...';
+      return 'Drawing...';
     }
-    return 'Katılabilir';
+    return 'Open';
   };
 
   const getStatusStyle = () => {
@@ -59,7 +59,7 @@ export function TableCard({ table }: TableCardProps) {
 
       <div className="card-stats">
         <div className="stat-row">
-          <span style={{ color: 'var(--text-secondary)' }}>Kapasite</span>
+          <span style={{ color: 'var(--text-secondary)' }}>Capacity</span>
           <span style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>
             <span style={{ color: table.participants.length >= table.capacity ? '#ff4757' : 'inherit' }}>
               {table.participants.length}
@@ -69,7 +69,7 @@ export function TableCard({ table }: TableCardProps) {
           </span>
         </div>
         <div className="stat-row">
-          <span style={{ color: 'var(--text-secondary)' }}>Ödül Havuzu</span>
+          <span style={{ color: 'var(--text-secondary)' }}>Prize Pool</span>
           <span style={{ 
             color: 'var(--gold-primary)', 
             fontWeight: 'bold', 
@@ -84,7 +84,7 @@ export function TableCard({ table }: TableCardProps) {
       {table.status === 'completed' && table.winner && (
         <div className="winner-box">
           <div style={{ color: '#00b894', fontWeight: 'bold', marginBottom: '0.3rem' }}>
-            🎉 Kazanan!
+            🎉 Winner!
           </div>
           <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)' }}>
             {table.winner.name || table.winner.address}
@@ -95,7 +95,7 @@ export function TableCard({ table }: TableCardProps) {
       {table.participants.length > 0 && (
         <div className="participants-list">
            <div style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Katılımcılar
+            Participants
           </div>
           {table.participants.map((p, idx) => (
             <div key={idx} className="participant-item">
@@ -114,10 +114,10 @@ export function TableCard({ table }: TableCardProps) {
         }}
       >
         {isFull
-          ? 'Masa Dolu'
+          ? 'Table Full'
           : table.status === 'completed'
-          ? 'Tamamlandı'
-          : 'Masaya Katıl (1 Para)'}
+          ? 'Completed'
+          : 'Join Table (1 Coin)'}
       </button>
     </div>
   );
