@@ -28,7 +28,8 @@ export function CreateTableModal({ isOpen, onClose }: CreateTableModalProps) {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        backdropFilter: 'blur(5px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -38,31 +39,43 @@ export function CreateTableModal({ isOpen, onClose }: CreateTableModalProps) {
     >
       <div
         style={{
-          backgroundColor: '#1a1a1a',
-          padding: '2rem',
-          borderRadius: '12px',
-          border: '1px solid #333',
-          minWidth: '400px',
+          background: 'linear-gradient(145deg, #1a1a20 0%, #15151a 100%)',
+          padding: '2.5rem',
+          borderRadius: '20px',
+          border: '1px solid rgba(212, 175, 55, 0.1)',
+          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5)',
+          minWidth: '450px',
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 style={{ marginTop: 0 }}>Yeni Masa Oluştur</h2>
+        <h2 style={{ 
+          marginTop: 0, 
+          marginBottom: '2rem',
+          fontSize: '1.8rem',
+          color: 'var(--text-primary)',
+          textAlign: 'center'
+        }}>
+          Yeni Masa Oluştur
+        </h2>
 
-        <div style={{ marginBottom: '1.5rem' }}>
+        <div style={{ marginBottom: '2rem' }}>
           <label
             style={{
               display: 'block',
-              marginBottom: '0.5rem',
-              color: '#888',
+              marginBottom: '1rem',
+              color: 'var(--text-secondary)',
+              fontSize: '0.9rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
             }}
           >
-            Masa Kapasitesi:
+            Masa Kapasitesi
           </label>
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(5, 1fr)',
-              gap: '0.5rem',
+              gap: '0.8rem',
             }}
           >
             {CAPACITY_OPTIONS.map((capacity) => (
@@ -70,17 +83,21 @@ export function CreateTableModal({ isOpen, onClose }: CreateTableModalProps) {
                 key={capacity}
                 onClick={() => setSelectedCapacity(capacity)}
                 style={{
-                  padding: '0.8rem',
-                  borderRadius: '8px',
+                  padding: '1rem 0.5rem',
+                  borderRadius: '12px',
                   border:
                     selectedCapacity === capacity
-                      ? '2px solid #646cff'
-                      : '1px solid #333',
-                  backgroundColor:
-                    selectedCapacity === capacity ? '#646cff' : '#1a1a1a',
-                  color: selectedCapacity === capacity ? 'white' : '#aaa',
+                      ? '1px solid var(--gold-primary)'
+                      : '1px solid rgba(255, 255, 255, 0.1)',
+                  background:
+                    selectedCapacity === capacity 
+                      ? 'rgba(212, 175, 55, 0.1)' 
+                      : 'rgba(255, 255, 255, 0.02)',
+                  color: selectedCapacity === capacity ? 'var(--gold-primary)' : 'var(--text-secondary)',
                   cursor: 'pointer',
                   fontWeight: selectedCapacity === capacity ? 'bold' : 'normal',
+                  transition: 'all 0.2s ease',
+                  boxShadow: selectedCapacity === capacity ? '0 0 15px rgba(212, 175, 55, 0.1)' : 'none',
                 }}
               >
                 {capacity}
@@ -94,31 +111,24 @@ export function CreateTableModal({ isOpen, onClose }: CreateTableModalProps) {
             display: 'flex',
             gap: '1rem',
             justifyContent: 'flex-end',
+            marginTop: '3rem',
           }}
         >
           <button
+            className="secondary"
             onClick={onClose}
             style={{
-              padding: '0.8rem 1.5rem',
-              borderRadius: '8px',
-              border: '1px solid #333',
-              backgroundColor: '#1a1a1a',
-              color: '#aaa',
-              cursor: 'pointer',
+              padding: '0.8rem 2rem',
             }}
           >
             İptal
           </button>
           <button
+            className="primary"
             onClick={handleCreate}
             style={{
-              padding: '0.8rem 1.5rem',
-              borderRadius: '8px',
-              border: 'none',
-              backgroundColor: '#646cff',
-              color: 'white',
-              cursor: 'pointer',
-              fontWeight: 'bold',
+              padding: '0.8rem 2rem',
+              minWidth: '120px',
             }}
           >
             Oluştur
