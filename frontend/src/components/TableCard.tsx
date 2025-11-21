@@ -33,19 +33,7 @@ export function TableCard({ table }: TableCardProps) {
   const statusStyle = getStatusStyle();
 
   return (
-    <div
-      style={{
-        background: 'linear-gradient(145deg, #1a1a20 0%, #15151a 100%)',
-        borderRadius: '20px',
-        padding: '1.5rem',
-        border: '1px solid rgba(255, 255, 255, 0.05)',
-        boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
-        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-      className="table-card"
-    >
+    <div className="table-card">
       {/* Dekoratif Glow Efekti */}
       <div style={{
         position: 'absolute',
@@ -57,50 +45,20 @@ export function TableCard({ table }: TableCardProps) {
         pointerEvents: 'none',
       }} />
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '1.5rem',
-          position: 'relative',
-        }}
-      >
-        <h3 style={{ 
-          margin: 0, 
-          fontSize: '1.4rem',
-          color: 'var(--text-primary)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem'
-        }}>
+      <div className="card-header">
+        <h3 className="card-title">
           <span style={{ color: 'var(--gold-primary)' }}>#</span>{table.id}
         </h3>
         <span
-          style={{
-            padding: '0.4rem 1rem',
-            borderRadius: '20px',
-            fontSize: '0.8rem',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            ...statusStyle
-          }}
+          className="status-badge"
+          style={statusStyle}
         >
           {getStatusText()}
         </span>
       </div>
 
-      <div style={{ marginBottom: '1.5rem', position: 'relative' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginBottom: '0.8rem',
-            paddingBottom: '0.8rem',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-          }}
-        >
+      <div className="card-stats">
+        <div className="stat-row">
           <span style={{ color: 'var(--text-secondary)' }}>Kapasite</span>
           <span style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>
             <span style={{ color: table.participants.length >= table.capacity ? '#ff4757' : 'inherit' }}>
@@ -110,13 +68,7 @@ export function TableCard({ table }: TableCardProps) {
             {table.capacity}
           </span>
         </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <div className="stat-row">
           <span style={{ color: 'var(--text-secondary)' }}>Ödül Havuzu</span>
           <span style={{ 
             color: 'var(--gold-primary)', 
@@ -130,16 +82,7 @@ export function TableCard({ table }: TableCardProps) {
       </div>
 
       {table.status === 'completed' && table.winner && (
-        <div
-          style={{
-            padding: '1rem',
-            background: 'linear-gradient(135deg, rgba(0, 184, 148, 0.1) 0%, rgba(0, 184, 148, 0.05) 100%)',
-            borderRadius: '12px',
-            marginBottom: '1.5rem',
-            border: '1px solid rgba(0, 184, 148, 0.3)',
-            textAlign: 'center',
-          }}
-        >
+        <div className="winner-box">
           <div style={{ color: '#00b894', fontWeight: 'bold', marginBottom: '0.3rem' }}>
             🎉 Kazanan!
           </div>
@@ -149,14 +92,24 @@ export function TableCard({ table }: TableCardProps) {
         </div>
       )}
 
+      {table.participants.length > 0 && (
+        <div className="participants-list">
+           <div style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            Katılımcılar
+          </div>
+          {table.participants.map((p, idx) => (
+            <div key={idx} className="participant-item">
+              {p.name || p.address}
+            </div>
+          ))}
+        </div>
+      )}
+
       <button
-        className={canJoin ? "primary" : "secondary"}
+        className={`join-btn ${canJoin ? "primary" : "secondary"}`}
         onClick={() => joinTable(table.id)}
         disabled={!canJoin}
         style={{
-          width: '100%',
-          padding: '1rem',
-          marginTop: 'auto',
           opacity: !canJoin && table.status !== 'waiting' ? 0.5 : 1,
         }}
       >

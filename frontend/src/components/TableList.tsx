@@ -12,34 +12,24 @@ export function TableList() {
           justifyContent: 'space-between',
           alignItems: 'center',
           marginBottom: '2rem',
+          flexWrap: 'wrap', // Mobilde başlıklar sarabilir
+          gap: '1rem'
         }}
       >
-        <h2 style={{ margin: 0 }}>Açık Masalar</h2>
-        <span style={{ color: '#888' }}>
+        <h2 style={{ margin: 0, color: 'var(--text-primary)' }}>Açık Masalar</h2>
+        <span style={{ color: 'var(--text-secondary)' }}>
           {state.tables.length} masa mevcut
         </span>
       </div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: '1.5rem',
-        }}
-      >
+      <div className="table-grid">
         {state.tables.map((table) => (
           <TableCard key={table.id} table={table} />
         ))}
       </div>
 
       {state.tables.length === 0 && (
-        <div
-          style={{
-            textAlign: 'center',
-            padding: '3rem',
-            color: '#888',
-          }}
-        >
+        <div className="empty-state">
           Henüz açık masa yok. İlk masayı oluşturun!
         </div>
       )}
