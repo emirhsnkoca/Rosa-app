@@ -11,7 +11,16 @@ function AppContent() {
     <div className="app-container">
       <header className="app-header">
         <div className="header-logo-group">
-          <span style={{ fontSize: '2.5rem' }}>🎰</span>
+          <img 
+            src="/rosa-logo.png" 
+            alt="Rosa Logo" 
+            style={{ 
+              height: '60px', 
+              width: 'auto', 
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 10px rgba(212, 175, 55, 0.3))'
+            }} 
+          />
           <h1 className="header-title">
             Rosa Lottery
           </h1>
