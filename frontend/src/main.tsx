@@ -1,7 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SuiClientProvider, WalletProvider } from '@mysten/dapp-kit';
+import { getFullnodeUrl } from '@mysten/sui/client';
+import '@mysten/dapp-kit/dist/index.css';
+import './index.css';
+import App from './App.tsx';
+
+const queryClient = new QueryClient();
+const networks = {
+  devnet: { url: getFullnodeUrl('devnet') },
+  mainnet: { url: getFullnodeUrl('mainnet') },
+};
 
 const rootElement = document.getElementById('root');
 
@@ -12,7 +22,13 @@ if (!rootElement) {
 try {
   createRoot(rootElement).render(
     <StrictMode>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <SuiClientProvider networks={networks} defaultNetwork="devnet">
+          <WalletProvider autoConnect>
+            <App />
+          </WalletProvider>
+        </SuiClientProvider>
+      </QueryClientProvider>
     </StrictMode>,
   );
 } catch (error) {
