@@ -9,6 +9,7 @@ import App from './App.tsx';
 
 const queryClient = new QueryClient();
 const networks = {
+  testnet: { url: getFullnodeUrl('testnet') },
   devnet: { url: getFullnodeUrl('devnet') },
   mainnet: { url: getFullnodeUrl('mainnet') },
 };
@@ -23,7 +24,7 @@ try {
   createRoot(rootElement).render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <SuiClientProvider networks={networks} defaultNetwork="devnet">
+        <SuiClientProvider networks={networks} defaultNetwork="testnet">
           <WalletProvider autoConnect>
             <App />
           </WalletProvider>

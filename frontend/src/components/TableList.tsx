@@ -1,8 +1,18 @@
-import { useApp } from '../context/AppContext';
+import { useTables } from '../hooks/useTableData';
 import { TableCard } from './TableCard';
 
 export function TableList() {
-  const { state } = useApp();
+  const { data: tables, isLoading, error } = useTables();
+
+  if (isLoading) {
+    return <div style={{ color: 'var(--text-secondary)', textAlign: 'center', padding: '2rem' }}>Loading tables from blockchain...</div>;
+  }
+
+  if (error) {
+    return <div style={{ color: 'var(--error-color)', textAlign: 'center', padding: '2rem' }}>Error loading tables.</div>;
+  }
+
+  const activeTables = tables || [];
 
   return (
     <div>
@@ -18,17 +28,17 @@ export function TableList() {
       >
         <h2 style={{ margin: 0, color: 'var(--text-primary)' }}>Active Tables</h2>
         <span style={{ color: 'var(--text-secondary)' }}>
-          {state.tables.length} tables available
+          {activeTables.length} tables available
         </span>
       </div>
 
       <div className="table-grid">
-        {state.tables.map((table) => (
+        {activeTables.map((table) => (
           <TableCard key={table.id} table={table} />
         ))}
       </div>
 
-      {state.tables.length === 0 && (
+      {activeTables.length === 0 && (
         <div className="empty-state">
           No active tables yet. Create the first one!
         </div>

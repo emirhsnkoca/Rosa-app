@@ -1,30 +1,43 @@
+import { useState } from 'react';
 import type { Table } from '../types';
-import { useApp } from '../context/AppContext';
+import { useRosaContract } from '../hooks/useRosaContract';
 
 interface TableCardProps {
   table: Table;
 }
 
 export function TableCard({ table }: TableCardProps) {
-  const { joinTable } = useApp();
+  const { joinTable } = useRosaContract();
+  const [isJoining, setIsJoining] = useState(false);
+  
   const isFull = table.participants.length >= table.capacity;
-  const canJoin = !isFull && table.status === 'waiting';
+  const canJoin = !isFull && table.status === 0; // 0: Active
+
+  const entryPriceSui = table.entryPrice / 1_000_000_000;
+
+  const handleJoin = () => {
+    if (!canJoin) return;
+    setIsJoining(true);
+    joinTable(table.id, table.entryPrice, () => {
+      setIsJoining(false);
+    });
+  };
 
   const getStatusText = () => {
-    if (table.status === 'completed' && table.winner) {
+    if (table.status === 1) { // 1: Completed
       return 'Completed';
     }
-    if (table.status === 'full') {
+    if (isFull) {
       return 'Drawing...';
     }
     return 'Open';
   };
 
   const getStatusStyle = () => {
-    if (table.status === 'completed') {
+    if (table.status === 1) {
       return { background: 'rgba(0, 184, 148, 0.2)', color: '#00b894', border: '1px solid #00b894' };
     }
-    if (table.status === 'full') {
+    if (isFull) {
       return { background: 'rgba(255, 165, 2, 0.2)', color: '#ffa502', border: '1px solid #ffa502' };
     }
     return { background: 'rgba(212, 175, 55, 0.2)', color: '#d4af37', border: '1px solid #d4af37' };
@@ -72,20 +85,10 @@ export function TableCard({ table }: TableCardProps) {
           textShadow: '0 0 20px rgba(212, 175, 55, 0.4)',
           lineHeight: '1'
         }}>
-          1 COIN
+          {entryPriceSui} SUI
         </span>
+        <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Entry Price</span>
       </div>
-
-      {table.status === 'completed' && table.winner && (
-        <div className="winner-box">
-          <div style={{ color: '#00b894', fontWeight: 'bold', marginBottom: '0.3rem' }}>
-            🎉 Winner!
-          </div>
-          <div style={{ fontSize: '0.9rem', color: 'var(--text-primary)' }}>
-            {table.winner.name || table.winner.address}
-          </div>
-        </div>
-      )}
 
       {/* Progress Bar Section */}
       <div style={{ marginBottom: '1.5rem', marginTop: 'auto' }}>
@@ -122,17 +125,19 @@ export function TableCard({ table }: TableCardProps) {
 
       <button
         className={`join-btn ${canJoin ? "primary" : "secondary"}`}
-        onClick={() => joinTable(table.id)}
-        disabled={!canJoin}
+        onClick={handleJoin}
+        disabled={!canJoin || isJoining}
         style={{
-          opacity: !canJoin && table.status !== 'waiting' ? 0.5 : 1,
+          opacity: !canJoin && table.status !== 0 ? 0.5 : (isJoining ? 0.7 : 1),
         }}
       >
-        {isFull
+        {isJoining 
+          ? 'Joining...' 
+          : isFull
           ? 'Table Full'
-          : table.status === 'completed'
+          : table.status === 1
           ? 'Completed'
-          : 'Join Table (1 Coin)'}
+          : `Join Table (${entryPriceSui} SUI)`}
       </button>
     </div>
   );
